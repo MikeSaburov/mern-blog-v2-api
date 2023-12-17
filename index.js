@@ -64,7 +64,3 @@ app.get('/profile', async (req, res) => {
 });
 
 app.listen(4000);
-
-//admin4545
-
-//mongodb+srv://admin:admin4545@cluster0.b5mg9d5.mongodb.net/blog?retryWrites=true&w=majority

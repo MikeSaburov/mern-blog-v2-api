@@ -3,11 +3,12 @@ const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('./models/User');
 
 const salt = bcrypt.genSaltSync(10);
-//const hash = bcrypt.hashSync()
+const secret = 'ask34735837shdjh4554';
 
 app.use(cors());
 app.use(express.json());
@@ -39,16 +40,15 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   const { userName, password } = req.body;
-  try {
-    const userDoc = await User.findOne({ userName });
-    const passOk = bcrypt.compareSync(password, userDoc.password);
-    if (passOk) {
-    } else {
-      res.status(400).json('Неверный логин или пароль.');
-    }
-    res.json(passOk);
-  } catch (err) {
-    res.status(400).json(err);
+  const userDoc = await User.findOne({ userName });
+  const passOk = bcrypt.compareSync(password, userDoc.password);
+  if (passOk) {
+    jwt.sign({ userName, id: userDoc._id }, secret, {}, (err, token) => {
+      if (err) throw err;
+      res.cookie('token', token).json('Ok');
+    });
+  } else {
+    res.status(400).json('Неверный логин или пароль.');
   }
 });
 

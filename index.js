@@ -22,11 +22,15 @@ mongoose
 
 app.post('/register', async (req, res) => {
   const { userName, password } = req.body;
-  const userDoc = await User.create({
-    userName,
-    password,
-  });
-  res.json(userDoc);
+  try {
+    const userDoc = await User.create({
+      userName,
+      password,
+    });
+    res.json(userDoc);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 app.listen(4000);

@@ -10,7 +10,12 @@ const User = require('./models/User');
 const salt = bcrypt.genSaltSync(10);
 const secret = 'ask34735837shdjh4554';
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:3000/',
+  })
+);
 app.use(express.json());
 
 //подключаемся к БД

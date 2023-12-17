@@ -11,8 +11,9 @@ const User = require('./models/User');
 const salt = bcrypt.genSaltSync(10);
 const secret = 'ask34735837shdjh4554';
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
+
 app.use(cookieParser());
 
 //подключаемся к БД
@@ -55,7 +56,11 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/profile', async (req, res) => {
-  res.json(req.cookies);
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, (err, info) => {
+    if (err) throw err;
+    res.json(info);
+  });
 });
 
 app.listen(4000);

@@ -2,8 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const User = require('./models/User');
+
+const salt = bcrypt.genSaltSync(10);
+//const hash = bcrypt.hashSync()
 
 app.use(cors());
 app.use(express.json());
@@ -25,7 +29,7 @@ app.post('/register', async (req, res) => {
   try {
     const userDoc = await User.create({
       userName,
-      password,
+      password: bcrypt.hashSync(password, salt),
     });
     res.json(userDoc);
   } catch (err) {

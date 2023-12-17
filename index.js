@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const User = require('./models/User');
 
@@ -12,6 +13,7 @@ const secret = 'ask34735837shdjh4554';
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 //подключаемся к БД
 mongoose
@@ -50,6 +52,10 @@ app.post('/login', async (req, res) => {
   } else {
     res.status(400).json('Неверный логин или пароль.');
   }
+});
+
+app.get('/profile', async (req, res) => {
+  res.json(req.cookies);
 });
 
 app.listen(4000);

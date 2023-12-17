@@ -37,6 +37,21 @@ app.post('/register', async (req, res) => {
   }
 });
 
+app.post('/login', async (req, res) => {
+  const { userName, password } = req.body;
+  try {
+    const userDoc = await User.findOne({ userName });
+    const passOk = bcrypt.compareSync(password, userDoc.password);
+    if (passOk) {
+    } else {
+      res.status(400).json('Неверный логин или пароль.');
+    }
+    res.json(passOk);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 app.listen(4000);
 
 //admin4545

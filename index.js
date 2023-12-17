@@ -48,7 +48,10 @@ app.post('/login', async (req, res) => {
   if (passOk) {
     jwt.sign({ userName, id: userDoc._id }, secret, {}, (err, token) => {
       if (err) throw err;
-      res.cookie('token', token).json('Ok');
+      res.cookie('token', token).json({
+        id: userDoc._id,
+        userName,
+      });
     });
   } else {
     res.status(400).json('Неверный логин или пароль.');

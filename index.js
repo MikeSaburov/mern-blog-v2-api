@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const User = require('./models/User');
 
@@ -69,5 +71,7 @@ app.get('/profile', async (req, res) => {
 app.post('/logout', async (req, res) => {
   res.cookie('token', '').json('Вы вышли.До встречи!');
 });
+
+app.post('/create', uploadMiddleware.single('file'), async (req, res) => {});
 
 app.listen(4000);

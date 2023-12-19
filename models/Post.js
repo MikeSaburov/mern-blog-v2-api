@@ -13,4 +13,4 @@ const PostShema = new Schema(
 
 const PostModel = model('Post', PostShema);
 
-module.exports = UserModel;
+module.exports = PostModel;

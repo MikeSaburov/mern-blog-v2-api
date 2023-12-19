@@ -80,7 +80,10 @@ app.post('/create', uploadMiddleware.single('file'), async (req, res) => {
   const ext = parts[parts.length - 1];
   const newPath = path + '.' + ext;
   fs.renameSync(path, newPath);
-  res.json({ ext });
+
+  const { title, summary, content } = req.body;
+  Post.create({});
+  res.json({ title, summary, content });
 });
 
 app.listen(4000);

@@ -10,6 +10,7 @@ const uploadMiddleware = multer({ dest: 'uploads/' });
 const fs = require('fs');
 
 const User = require('./models/User');
+const Post = require('./models/Post');
 
 const salt = bcrypt.genSaltSync(10);
 const secret = 'ask34735837shdjh4554';

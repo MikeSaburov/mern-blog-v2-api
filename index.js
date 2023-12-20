@@ -97,7 +97,12 @@ app.post('/create', uploadMiddleware.single('file'), async (req, res) => {
 });
 
 app.get('/post', async (req, res) => {
-  res.json(await Post.find().populate('author', ['userName']));
+  res.json(
+    await Post.find()
+      .populate('author', ['userName'])
+      .sort({ createdAt: -1 }) // сортировка по  дате
+      .limit(10) //лимит постов
+  );
 });
 
 app.listen(4000);

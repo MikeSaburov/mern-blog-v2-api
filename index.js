@@ -17,8 +17,8 @@ const secret = 'ask34735837shdjh4554';
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
-
 app.use(cookieParser());
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 //подключаемся к БД
 mongoose
